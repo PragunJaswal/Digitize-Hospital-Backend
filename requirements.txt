@@ -1,0 +1,5 @@
+fastapi
+pydantic
+psycopg2
+mangum
+uvicorn == 0.21.1

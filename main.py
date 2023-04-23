@@ -1,11 +1,12 @@
 from fastapi import FastAPI ,Response ,status ,HTTPException
 from fastapi.params import Body          #FOR POST RESPONSE
 from pydantic import BaseModel           #FOR SCHEMA
-from random import randrange
 
-import psycopg2                             # for databse connection
+import psycopg2                      # for databse connection
 from psycopg2.extras import RealDictCursor
 import time
+from mangum import Mangum
+
 
 app =FastAPI()
 
@@ -41,7 +42,7 @@ while True:
 
 
 
-
+handler = Mangum(app)
 
 @app.get("/")
 def root():
