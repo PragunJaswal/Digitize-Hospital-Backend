@@ -28,8 +28,8 @@ class Post(BaseModel):
                     #connection with database
 while True:
     try:
-        conn = psycopg2.connect(host = 'postgresql://pragun:GSwaaOpWxmCEposCnIO4QUayDizDgffY@dpg-ch2kh3t269v61fdprae0-a/database_acqv', database ='database', 
-                            user='pragun' ,password ='jaswal',cursor_factory= RealDictCursor)
+        conn = psycopg2.connect(host = 'dpg-ch2kh3t269v61fdprae0-a', database ='database_acqv', 
+                            user='pragun' ,password ='GSwaaOpWxmCEposCnIO4QUayDizDgffY',cursor_factory= RealDictCursor)
         cursor = conn.cursor()
         print("DATABASE CONNECTED")
         break
