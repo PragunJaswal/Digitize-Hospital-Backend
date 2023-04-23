@@ -2,7 +2,7 @@ from fastapi import FastAPI ,Response ,status ,HTTPException
 from fastapi.params import Body          #FOR POST RESPONSE
 from pydantic import BaseModel           #FOR SCHEMA
 
-import psycopg2                      # for databse connection
+import psycopg2                     # for databse connection
 from psycopg2.extras import RealDictCursor
 import time
 from mangum import Mangum
@@ -28,8 +28,8 @@ class Post(BaseModel):
                     #connection with database
 while True:
     try:
-        conn = psycopg2.connect(host = 'localhost', database ='pragun', 
-                            user='postgres' ,password ='jaswal',cursor_factory= RealDictCursor)
+        conn = psycopg2.connect(host = 'postgresql://pragun:GSwaaOpWxmCEposCnIO4QUayDizDgffY@dpg-ch2kh3t269v61fdprae0-a/database_acqv', database ='database', 
+                            user='pragun' ,password ='jaswal',cursor_factory= RealDictCursor)
         cursor = conn.cursor()
         print("DATABASE CONNECTED")
         break
@@ -38,8 +38,6 @@ while True:
         print("Connection is not Establised")
         print("Error was ",error)
         time.sleep(2)
-
-
 
 
 handler = Mangum(app)
