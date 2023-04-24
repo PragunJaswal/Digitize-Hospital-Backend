@@ -5,7 +5,6 @@ from pydantic import BaseModel           #FOR SCHEMA
 import psycopg2                     # for databse connection
 from psycopg2.extras import RealDictCursor
 import time
-from mangum import Mangum
 
 
 app =FastAPI()
@@ -28,7 +27,7 @@ class Post(BaseModel):
                     #connection with database
 while True:
     try:
-        conn = psycopg2.connect(host = 'dpg-ch2kh3t269v61fdprae0-a', database ='database_acqv', 
+        conn = psycopg2.connect(host = 'dpg-ch2kh3t269v61fdprae0-a.singapore-postgres.render.com', database ='database_acqv', 
                             user='pragun' ,password ='GSwaaOpWxmCEposCnIO4QUayDizDgffY',cursor_factory= RealDictCursor)
         cursor = conn.cursor()
         print("DATABASE CONNECTED")
@@ -39,8 +38,6 @@ while True:
         print("Error was ",error)
         time.sleep(2)
 
-
-handler = Mangum(app)
 
 @app.get("/")
 def root():
