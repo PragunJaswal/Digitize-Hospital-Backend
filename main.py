@@ -81,14 +81,10 @@ def find(id):
 
 
 
-
-
-
-
-
 @app.get("/getdata/{id}")
 def getid(id : int , response : Response):
     # data = find(int(id))
+    print(id)
     cursor.execute(f"""SELECT * FROM posts WHERE id = {id} """)
     new = cursor.fetchone()
     
@@ -98,6 +94,22 @@ def getid(id : int , response : Response):
         # response.status_code = status.HTTP_404_NOT_FOUND
         # return{"Message":f"id:{id} not found"}
     return{"data":f"here is the requested data {new}"}
+
+
+@app.get("/getbymobile/{mobile}")
+def getbymobile(mobile : int , response : Response):
+    # data = find(int(id))
+    cursor.execute(f"""SELECT * FROM posts WHERE mobile = {mobile} """)
+    new = cursor.fetchone()
+    
+    if not new:                             #METHOD TO THROUGH RESPONSE WHEN NO ID IS MATCHED
+
+        raise HTTPException(status_code=404 , detail="Data not found")
+        # response.status_code = status.HTTP_404_NOT_FOUND
+        # return{"Message":f"id:{id} not found"}
+    return{"data":new}
+
+
 
 
 #                                       logic to get latest post
