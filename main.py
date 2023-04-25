@@ -1,6 +1,10 @@
-from fastapi import FastAPI ,Response ,status ,HTTPException
+from fastapi import FastAPI ,Response ,status ,HTTPException, Request
 from fastapi.params import Body          #FOR POST RESPONSE
 from pydantic import BaseModel           #FOR SCHEMA
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
+from fastapi.middleware.cors import CORSMiddleware
 
 import psycopg2                     # for databse connection
 from psycopg2.extras import RealDictCursor
@@ -8,6 +12,17 @@ import time
 
 
 app =FastAPI()
+
+origins =["*"]
+
+
+app.add_middleware(CORSMiddleware,
+                    allow_origins = origins,
+                    allow_credentials =True,
+                    allow_methods=["*"],
+                    allow_headers=["*"]
+                    )
+
 
 my_post= [
     {"name":"Jaswal","age":"45","sex":"Male","mobile":8544722770,"aadhar":78415162770,"id":1},
@@ -37,6 +52,13 @@ while True:
         print("Connection is not Establised")
         print("Error was ",error)
         time.sleep(2)
+
+templates =Jinja2Templates(directory="templates")
+
+
+@app.get("/gettable", response_class=HTMLResponse)
+def gettable(request : Request):
+    return templates.TemplateResponse("index.html",{"request": request} )
 
 
 @app.get("/")
@@ -155,3 +177,7 @@ def update(id: int ,post: Post):
 
 
     return{"data":my_post}
+
+
+
+
