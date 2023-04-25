@@ -13,7 +13,7 @@ import time
 
 app =FastAPI()
 
-origins =["*"]
+origins =["https://digitilize-pragun.onrender.com/getdata"]
 
 
 app.add_middleware(CORSMiddleware,
