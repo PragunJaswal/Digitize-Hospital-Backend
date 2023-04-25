@@ -3,4 +3,5 @@ pydantic
 psycopg2
 mangum
 jinja2
+starlette
 uvicorn == 0.21.1

@@ -4,8 +4,8 @@ from pydantic import BaseModel           #FOR SCHEMA
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from fastapi.middleware.cors import CORSMiddleware
 
+from starlette.middleware.cors import CORSMiddleware
 import psycopg2                     # for databse connection
 from psycopg2.extras import RealDictCursor
 import time
