@@ -2,4 +2,5 @@ fastapi
 pydantic
 psycopg2
 mangum
+jinja2
 uvicorn == 0.21.1
