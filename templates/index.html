@@ -1,13 +1,55 @@
+<!DOCTYPE html>
 <html>
 <head>
-<style>
-del {background-color: tomato;}
-ins {background-color: yellow;}
-</style>
+	<title>API Data Table</title>
+	<style>
+        
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+			padding: 5px;
+		}
+	</style>
 </head>
 <body>
+	<table id="myTable">
+		<thead>
+            <tr>
+                <th>Server_1</th> 
+            </tr>
+			<tr bgcolor = "lightblue">
 
-<p>My favorite color is <del>blue</del> <ins>red</ins>!</p>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Sex</th>
+				<th>Mobile</th>
+				<th>Aadhar</th>
+				<th>Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+
+	<script>
+		fetch('https://digitilize-pragun.onrender.com/getdata')
+			.then(response => response.json())
+			.then(data => {
+				let tableBody = document.querySelector('#myTable tbody');
+				data.data.forEach(rowData => {
+					let row = document.createElement('tr');
+					Object.values(rowData).forEach(cellData => {
+						let cell = document.createElement('td');
+						cell.textContent = cellData;
+						row.appendChild(cell);
+					});
+					tableBody.appendChild(row);
+				});
+			})
+			.catch(error => console.log(error));
+	</script>
 
 </body>
 </html>
