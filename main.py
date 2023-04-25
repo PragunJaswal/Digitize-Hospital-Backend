@@ -13,15 +13,21 @@ import time
 
 app =FastAPI()
 
-origins =["https://digitilize-pragun.onrender.com/getdata"]
+origins = [
+    "https://digitilize-pragun.onrender.com/getdata",
+    "http://digitilize-pragun.onrender.com/getdata",
+    "http://digitilize-pragun.onrender.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
 
-
-app.add_middleware(CORSMiddleware,
-                    allow_origins = origins,
-                    allow_credentials =True,
-                    allow_methods=["*"],
-                    allow_headers=["*"]
-                    )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 my_post= [
