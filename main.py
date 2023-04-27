@@ -81,6 +81,7 @@ def gettable(request : Request):
 def root():
     return{"server is running"}
 
+
 @app.get("/getdata")
 def getpost():
     try:
@@ -91,13 +92,15 @@ def getpost():
             cursor.close()
             cursor = conn.cursor()
         except:
-            conn.close()
+            cursor= conn.close()
             conn = psycopg2.connect(host = 'dpg-ch2kh3t269v61fdprae0-a.singapore-postgres.render.com', database ='database_acqv', 
                             user='pragun' ,password ='GSwaaOpWxmCEposCnIO4QUayDizDgffY',cursor_factory= RealDictCursor)
         cursor = conn.cursor()
     # cursor.execute("""SELECT * FROM posts""")
     posts = cursor.fetchall()
     return{ "data":posts }\
+
+
 
 @app.get("/server2/getdata")
 def getpost():
