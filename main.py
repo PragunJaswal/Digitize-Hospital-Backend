@@ -84,21 +84,10 @@ def root():
 
 @app.get("/getdata")
 def getpost():
-    try:
-        cursor.execute("""SELECT * FROM posts""")
-    except Exception as e:
-        print (e)
-        try:
-            cursor.close()
-            cursor = conn.cursor()
-        except:
-            cursor= conn.close()
-            conn = psycopg2.connect(host = 'dpg-ch2kh3t269v61fdprae0-a.singapore-postgres.render.com', database ='database_acqv', 
-                            user='pragun' ,password ='GSwaaOpWxmCEposCnIO4QUayDizDgffY',cursor_factory= RealDictCursor)
-        cursor = conn.cursor()
-    # cursor.execute("""SELECT * FROM posts""")
+
+    cursor.execute("""SELECT * FROM posts""")
     posts = cursor.fetchall()
-    return{ "data":posts }\
+    return{ "data":posts }
 
 
 
