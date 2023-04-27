@@ -37,6 +37,18 @@ class Post(BaseModel):
     mobile: int
     aadhar: int
 
+                            #Server 2 Schema
+class Post2(BaseModel):
+    parchi: int 
+    name: str  
+    age: int
+    sex: str
+    location: str
+    department: str
+    date: str
+    time: str
+
+
 
                     #connection with database
 while True:
@@ -60,6 +72,11 @@ def gettable(request : Request):
     return templates.TemplateResponse("index.html",{"request": request} )
 
 
+@app.get("/server2/gettable", response_class=HTMLResponse)
+def gettable(request : Request):
+    return templates.TemplateResponse("server.html",{"request": request} )
+
+
 @app.get("/")
 def root():
     return{"server is running"}
@@ -67,6 +84,12 @@ def root():
 @app.get("/getdata")
 def getpost():
     cursor.execute("""SELECT * FROM posts""")
+    posts = cursor.fetchall()
+    return{ "data":posts }\
+
+@app.get("/server2/getdata")
+def getpost():
+    cursor.execute("""SELECT * FROM patient""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
@@ -92,6 +115,19 @@ def post(payload: Post):
     conn.commit()
     return{"Success":new }
 
+
+@app.post("/server2/postdata",status_code=201)        #DEFAULT RESPONSE 201
+def post(payload: Post2):
+    # print(payload.name)         print  a specific key data
+    # payload.dict()              #convert class of schema to dictanory datatype
+    # new = payload.dict()
+    # new['id']=randrange(0,100000)
+    # my_post.append(new)
+    cursor.execute("""INSERT INTO patient (parchi,name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
+        payload.parchi,payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
+    new =cursor.fetchone()
+    conn.commit()
+    return{"Success":new }
 
 #                                           get a item with id
 
