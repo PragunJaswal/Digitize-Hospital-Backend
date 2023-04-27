@@ -85,7 +85,7 @@ def root():
 @app.get("/getdata")
 def getpost():
 
-    cursor.execute("""SELECT * FROM posts""")
+    cursor.execute("""SELECT * FROM posts ORDER BY id ASC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
@@ -93,7 +93,7 @@ def getpost():
 
 @app.get("/server2/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM patient""")
+    cursor.execute("""SELECT * FROM patient ORDER BY parchi DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
@@ -117,6 +117,7 @@ def post(payload: Post):
         payload.name,payload.age,payload.sex,payload.mobile,payload.aadhar))
     new =cursor.fetchone()
     conn.commit()
+    conn.rollback()
     return{"Success":new }
 
 
@@ -127,10 +128,12 @@ def post(payload: Post2):
     # new = payload.dict()
     # new['id']=randrange(0,100000)
     # my_post.append(new)
+
     cursor.execute("""INSERT INTO patient (parchi,name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
         payload.parchi,payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
-    new =cursor.fetchone()
+    new =cursor.fetchone()  
     conn.commit()
+    conn.rollback()
     return{"Success":new }
 
 #                                           get a item with id
