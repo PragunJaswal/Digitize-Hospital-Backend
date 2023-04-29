@@ -114,7 +114,6 @@ def getlocation(location :str):
     print (my_dict)
     return{ "data":my_dict}
 
-
 @app.post("/post")                          # simple post
 def post(payload: dict = Body(...)):
     print(payload)
@@ -173,7 +172,7 @@ def getid(id : int , response : Response):
         raise HTTPException(status_code=404 , detail="Not found")
         # response.status_code = status.HTTP_404_NOT_FOUND
         # return{"Message":f"id:{id} not found"}
-    return{"data":f"here is the requested data {new}"}
+    return{"data":f"requested data {new}"}
 
 
 @app.get("/getbymobile/{mobile}")
