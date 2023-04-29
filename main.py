@@ -93,7 +93,7 @@ def getpost():
 
 @app.get("/server2/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM patient ORDER BY parchi DESC""")
+    cursor.execute("""SELECT * FROM patient ORDER BY id ASC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
