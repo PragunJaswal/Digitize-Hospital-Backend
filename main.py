@@ -98,6 +98,22 @@ def getpost():
     return{ "data":posts }
 
 
+@app.get("/server2/location")
+def getlocation():
+    cursor.execute("""SELECT "Location" FROM admin""")
+    posts = cursor.fetchall()
+    return{ "data":posts }
+
+@app.get("/server2/department/{location}")
+def getlocation(location :str):
+    cursor.execute(f"""SELECT "Department" FROM admin WHERE "Location" LIKE '{location}'""")
+    posts = cursor.fetchall()
+    data = posts[0]['Department']
+    new = data.split(",")
+    my_dict = dict(zip(range(len(new)), new))
+    print (my_dict)
+    return{ "data":my_dict}
+
 
 @app.post("/post")                          # simple post
 def post(payload: dict = Body(...)):
