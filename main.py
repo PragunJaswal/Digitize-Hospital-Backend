@@ -114,6 +114,13 @@ def getlocation(location :str):
     print (my_dict)
     return{ "data":my_dict}
 
+@app.get("/server3/getdata")
+def getpost():
+    cursor.execute("""SELECT * FROM server3 ORDER BY id ASC""")
+    posts = cursor.fetchall()
+    return{ "data":posts }
+
+
 @app.post("/post")                          # simple post
 def post(payload: dict = Body(...)):
     print(payload)
