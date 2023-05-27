@@ -37,6 +37,11 @@ class Post(BaseModel):
     mobile: int
     aadhar: int
 
+class Put(BaseModel):
+    id =int 
+    time = str
+
+
                             #Server 2 Schema
 class Post2(BaseModel):
     parchi: int 
@@ -121,6 +126,18 @@ def getpost():
     return{ "data":posts }
 
 
+@app.put("/postdata/server3",status_code=201)        #DEFAULT RESPONSE 201
+def post(payload: Put):
+    print("payload = ")
+    print(payload.id)
+    cursor.execute("""UPDATE server3 SET allotted_slot = (%s) WHERE id = (%s) returning *""",(
+    payload.id,payload.time))
+    new =cursor.fetchone()
+    conn.commit()
+    conn.rollback()
+    return{"Success":new }
+
+
 @app.post("/post")                          # simple post
 def post(payload: dict = Body(...)):
     print(payload)
@@ -150,6 +167,8 @@ def post(payload: Post2):
     # new = payload.dict()
     # new['id']=randrange(0,100000)
     # my_post.append(new)
+    print("payload = ")
+    print(payload.parchi)
 
     cursor.execute("""INSERT INTO patient (parchi,name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
         payload.parchi,payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
