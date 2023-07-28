@@ -87,6 +87,10 @@ def gettable(request : Request):
 def root():
     return{"server is running"}
 
+@app.get("/test")
+def root():
+    return{"server is working fine but your database may be expired}
+
 
 @app.get("/getdata")
 def getpost():
