@@ -85,6 +85,7 @@ def root():
 def root():
     return{"server is running but database might be is down ;("}
 
+
 @app.get("/getdata")
 def getpost():
 
