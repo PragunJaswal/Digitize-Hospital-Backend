@@ -37,12 +37,6 @@ class Post(BaseModel):
     mobile: int
     aadhar: int
 
-
-class Post3(BaseModel):
-    id: int 
-    time: str
-
-
                             #Server 2 Schema
 class Post2(BaseModel):
     parchi: int 
@@ -87,6 +81,9 @@ def gettable(request : Request):
 def root():
     return{"server is running"}
 
+@app.get("/test")
+def root():
+    return{"server is running but database might be is down ;("}
 
 @app.get("/getdata")
 def getpost():
@@ -125,19 +122,6 @@ def getpost():
     cursor.execute("""SELECT * FROM server3 ORDER BY id ASC""")
     posts = cursor.fetchall()
     return{ "data":posts }
-
-#server 3 post
-
-@app.post("/postdata/server3",status_code=201)        #DEFAULT RESPONSE 201
-def post(payload: Post3):
-    print("payload = ")
-    print(payload.id)
-    cursor.execute("""UPDATE server3 SET allotted_slot = %s WHERE id = %s returning *""",(
-    payload.time,payload.id))
-    new =cursor.fetchone()
-    conn.commit()
-    conn.rollback()
-    return{"Success":new }
 
 
 @app.post("/post")                          # simple post
