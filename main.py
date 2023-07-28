@@ -89,7 +89,7 @@ def root():
 
 @app.get("/test")
 def root():
-    return{"server is working fine but your database may be expired}
+    return{"server is working fine but your database may be expired"}
 
 
 @app.get("/getdata")
