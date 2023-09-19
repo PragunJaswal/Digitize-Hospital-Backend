@@ -1,6 +1,7 @@
 fastapi
 pydantic
 psycopg2
+requests
 mangum
 jinja2
 starlette
