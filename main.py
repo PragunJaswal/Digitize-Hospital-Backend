@@ -3,7 +3,9 @@ from fastapi.params import Body          #FOR POST RESPONSE
 from pydantic import BaseModel           #FOR SCHEMA
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-
+import time
+import threading
+import requests
 
 from starlette.middleware.cors import CORSMiddleware
 import psycopg2                     # for databse connection
@@ -53,8 +55,8 @@ class Post2(BaseModel):
                     #connection with database
 while True:
     try:
-        conn = psycopg2.connect(host = 'dpg-ch2kh3t269v61fdprae0-a.singapore-postgres.render.com', database ='database_acqv', 
-                            user='pragun' ,password ='GSwaaOpWxmCEposCnIO4QUayDizDgffY',cursor_factory= RealDictCursor)
+        conn = psycopg2.connect(host = 'db.idojuihasgaurthhrddn.supabase.co', database ='postgres', 
+                            user='postgres' ,password ='PragunJaswal',cursor_factory= RealDictCursor)
         cursor = conn.cursor()
         print("DATABASE CONNECTED")
         break
@@ -66,6 +68,30 @@ while True:
 
 templates =Jinja2Templates(directory="templates")
 
+
+def print_api_response():
+    api_url = "https://digitilize-pragun.onrender.com/"
+    while True:
+        try:
+            # Make a GET request to the API
+            response = requests.get(api_url)
+
+            # Check if the request was successful (status code 200)
+            if response.status_code == 200:
+                # Print the API response content
+                print(response.text)
+            else:
+                print(f"Failed to fetch data. Status code: {response.status_code}")
+
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+
+        # Wait for 5 seconds before making the next request
+        time.sleep(10)
+
+
+# Create a background thread to run the print_api_response function
+background_thread = threading.Thread(target=print_api_response)
 
 @app.get("/gettable", response_class=HTMLResponse)
 def gettable(request : Request):
