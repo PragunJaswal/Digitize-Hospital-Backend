@@ -87,7 +87,7 @@ def print_api_response():
             print(f"An error occurred: {str(e)}")
 
         # Wait for 5 seconds before making the next request
-        time.sleep(10)
+        time.sleep(120)
 
 
 # Create a background thread to run the print_api_response function
