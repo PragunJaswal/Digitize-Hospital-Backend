@@ -127,7 +127,6 @@ def getpost():
     posts = cursor.fetchall()
     return{ "data":posts }
 
-
 @app.get("/server2/location")
 def getlocation():
     cursor.execute("""SELECT "Location" FROM admin""")
