@@ -137,11 +137,8 @@ def getlocation():
 def getlocation(location :str):
     cursor.execute(f"""SELECT "Department" FROM admin WHERE "Location" LIKE '{location}'""")
     posts = cursor.fetchall()
-    data = posts[0]['Department']
-    new = data.split(",")
-    my_dict = dict(zip(range(len(new)), new))
-    print (my_dict)
-    return{ "data":my_dict}
+    print (posts)
+    return{ "data":posts}
 
 @app.get("/server3/getdata")
 def getpost():
@@ -165,7 +162,7 @@ def post(payload: Post):
     # new['id']=randrange(0,100000)
     # my_post.append(new)
     cursor.execute("""INSERT INTO posts (name, age ,sex,mobile,aadhar) VALUES (%s,%s,%s,%s,%s) RETURNING *""",(
-        payload.name,payload.age,payload.sex,payload.mobile,payload.aadhar))
+    payload.name,payload.age,payload.sex,payload.mobile,payload.aadhar))
     new =cursor.fetchone()
     conn.commit()
     conn.rollback()
