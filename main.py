@@ -178,10 +178,11 @@ def post(payload: Post2):
     # my_post.append(new)
 
     cursor.execute("""INSERT INTO patient (name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
-        payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
+            payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
     new =cursor.fetchone()
     conn.commit()
     conn.rollback()
+    # print(new)
     return{"Success":new }
 
 #                                           get a item with id
