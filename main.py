@@ -177,9 +177,9 @@ def post(payload: Post2):
     # new['id']=randrange(0,100000)
     # my_post.append(new)
 
-    cursor.execute("""INSERT INTO patient (parchi,name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
-        payload.parchi,payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
-    new =cursor.fetchone()  
+    cursor.execute("""INSERT INTO patient (name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
+        payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
+    new =cursor.fetchone()
     conn.commit()
     conn.rollback()
     return{"Success":new }
