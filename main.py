@@ -41,7 +41,6 @@ class Post(BaseModel):
 
                             #Server 2 Schema
 class Post2(BaseModel):
-    parchi: int 
     name: str  
     age: int
     sex: str
@@ -49,7 +48,6 @@ class Post2(BaseModel):
     department: str
     date: str
     time: str
-
 
 
                     #connection with database
@@ -86,12 +84,13 @@ def print_api_response():
         except Exception as e:
             print(f"An error occurred: {str(e)}")
 
-        # Wait for 5 seconds before making the next request
-        time.sleep(120)
+        # Wait for 60 seconds before making the next request
+        time.sleep(60)
 
 
 # Create a background thread to run the print_api_response function
 background_thread = threading.Thread(target=print_api_response)
+
 
 @app.get("/gettable", response_class=HTMLResponse)
 def gettable(request : Request):
