@@ -114,7 +114,7 @@ def root():
 @app.get("/getdata")
 def getpost():
 
-    cursor.execute("""SELECT * FROM posts ORDER BY id ASC""")
+    cursor.execute("""SELECT * FROM posts ORDER BY id DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
@@ -122,7 +122,7 @@ def getpost():
 
 @app.get("/server2/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM patient ORDER BY id ASC""")
+    cursor.execute("""SELECT * FROM patient ORDER BY id DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
