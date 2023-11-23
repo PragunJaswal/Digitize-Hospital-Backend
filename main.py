@@ -170,12 +170,6 @@ def post(payload: Post):
 
 @app.post("/server2/postdata",status_code=201)        #DEFAULT RESPONSE 201
 def post(payload: Post2):
-    # print(payload.name)         print  a specific key data
-    # payload.dict()              #convert class of schema to dictanory datatype
-    # new = payload.dict()
-    # new['id']=randrange(0,100000)
-    # my_post.append(new)
-
     cursor.execute("""INSERT INTO patient (name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
             payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
     new =cursor.fetchone()
