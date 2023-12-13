@@ -68,8 +68,9 @@ templates =Jinja2Templates(directory="templates")
 
 
 def print_api_response():
-    api_url = "https://digitilize-pragun.onrender.com/"
+    api_url = "https://digitilize-pragun.onrender.com/getdata"
     while True:
+    
         try:
             # Make a GET request to the API
             response = requests.get(api_url)
@@ -88,7 +89,7 @@ def print_api_response():
         time.sleep(60)
 
 
-# Create a background thread to run the print_api_response function
+# Create a background thread to run the print_api_response function:
 background_thread = threading.Thread(target=print_api_response)
 
 
