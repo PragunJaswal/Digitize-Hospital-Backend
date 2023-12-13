@@ -114,7 +114,7 @@ def root():
 @app.get("/getdata")
 def getpost():
 
-    cursor.execute("""SELECT * FROM posts ORDER BY id DESC""")
+    cursor.execute("""SELECT * FROM login ORDER BY id DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
@@ -205,7 +205,7 @@ def getid(id : int , response : Response):
 @app.get("/getbymobile/{mobile}")
 def getbymobile(mobile : int , response : Response):
     # data = find(int(id))
-    cursor.execute(f"""SELECT * FROM posts WHERE mobile = {mobile} """)
+    cursor.execute(f"""SELECT * FROM login WHERE mobile = {mobile} """)
     new = cursor.fetchone()
     
     if not new:                             #METHOD TO THROUGH RESPONSE WHEN NO ID IS MATCHED
