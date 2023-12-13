@@ -125,6 +125,12 @@ def getpost():
     posts = cursor.fetchall()
     return{ "data":posts }
 
+@app.get("/get/status/doctor")
+def getpost():
+    cursor.execute("""SELECT * FROM doctors ORDER BY id DESC""")
+    posts = cursor.fetchall()
+    return{ "data":posts }
+
 @app.get("/server2/getdata")
 def getpost():
     cursor.execute("""SELECT * FROM patient ORDER BY id DESC""")
