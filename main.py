@@ -118,15 +118,14 @@ def getpost():
     try:
             # Make a GET request to the API
         cursor.execute("""SELECT * FROM login ORDER BY id DESC""")
+        posts = cursor.fetchall()
+        return{ "data":posts }
 
     except Exception as e:
         print(f"An error occurred given as: {str(e)}")
 
 
-            
-            
-    # posts = cursor.fetchall()
-    # return{ "data":posts }
+        
 
 @app.get("/getadmin")
 def getpost():
