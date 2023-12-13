@@ -1,4 +1,4 @@
-from fastapi import FastAPI ,Response ,status ,HTTPException, Request
+from fastapi import FastAPI ,Response ,status ,HTTPException, Request, Path
 from fastapi.params import Body          #FOR POST RESPONSE
 from pydantic import BaseModel           #FOR SCHEMA
 from fastapi.responses import HTMLResponse
@@ -6,7 +6,6 @@ from fastapi.templating import Jinja2Templates
 import time
 import threading
 import requests
-
 from starlette.middleware.cors import CORSMiddleware
 import psycopg2                     # for databse connection
 from psycopg2.extras import RealDictCursor
@@ -119,7 +118,6 @@ def getpost():
         cursor.execute("""SELECT * FROM login ORDER BY id DESC""")
         posts = cursor.fetchall()
         return{ "data":posts }
-
     except Exception as e:
         print(f"An error occurred given as: {str(e)}")
 
@@ -137,6 +135,14 @@ def getpost():
     cursor.execute("""SELECT * FROM doctors ORDER BY id DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
+
+
+@app.get("/update/doctor/{registration_id}")
+def update_doctor_status(registration_id: int,state: int = 0):
+    cursor.execute(f"""UPDATE public.doctors SET status = {state} WHERE registration_id = {registration_id}""")
+    conn.commit()
+    conn.rollback()
+    return {"updated"}
 
 @app.get("/server2/getdata")
 def getpost():
