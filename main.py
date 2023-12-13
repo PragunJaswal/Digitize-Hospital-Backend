@@ -119,7 +119,11 @@ def getpost():
     posts = cursor.fetchall()
     return{ "data":posts }
 
-
+@app.get("/getadmin")
+def getpost():
+    cursor.execute("""SELECT * FROM admin_login ORDER BY id DESC""")
+    posts = cursor.fetchall()
+    return{ "data":posts }
 
 @app.get("/server2/getdata")
 def getpost():
