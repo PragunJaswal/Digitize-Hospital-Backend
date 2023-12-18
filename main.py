@@ -65,7 +65,26 @@ while True:
 
 templates =Jinja2Templates(directory="templates")
 
+def connect_to_database():
+    try:
+        conn = psycopg2.connect(
+            host='db.idojuihasgaurthhrddn.supabase.co',
+            database='postgres',
+            user='postgres',
+            password='PragunJaswal',
+            cursor_factory=RealDictCursor
+        )
+        print("DATABASE CONNECTED")
+        return conn
+    except psycopg2.Error as e:
+        print(f"Error connecting to the database: {e}")
+        return None
 
+def close_database_connection(conn):
+    if conn:
+        conn.close()
+        print("DATABASE CONNECTION CLOSED")
+        
 # def print_api_response():
 #     api_url = "https://digitilize-pragun.onrender.com/getdata"
 #     while True:
@@ -119,7 +138,11 @@ def getpost():
         posts = cursor.fetchall()
         return{ "data":posts }
     except Exception as e:
+        close_database_connection(database_connection)
+        database_connection = connect_to_database()
         print(f"An error occurred given as: {str(e)}")
+        return(f"error exsisted as {e}")
+        
 
 
 @app.get("/getadmin")
