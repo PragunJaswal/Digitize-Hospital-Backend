@@ -84,7 +84,7 @@ def close_database_connection(conn):
     if conn:
         conn.close()
         print("DATABASE CONNECTION CLOSED")
-        
+
 # def print_api_response():
 #     api_url = "https://digitilize-pragun.onrender.com/getdata"
 #     while True:
@@ -173,7 +173,7 @@ def getpost():
 
 @app.get("/server2/location")
 def getlocation():
-    cursor.execute("""SELECT "Location" FROM admin""")
+    cursor.execute("""SELECT DISTINCT "Location" FROM admin""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
