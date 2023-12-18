@@ -204,7 +204,7 @@ def getlocation(location :str):
 
 @app.get("/server3/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM server3 ORDER BY id ASC""")
+    cursor.execute("""SELECT * FROM patient ORDER BY id ASC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 

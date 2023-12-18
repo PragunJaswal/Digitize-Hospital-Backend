@@ -1,37 +1,51 @@
-name = "pragun"
-new = name.replace("pragun","jaswal")
-print(new)
+import schedule
+import time
+import requests
+from datetime import datetime
+from datetime import datetime, timedelta
+def do():
+    initial = datetime.now()
+    url = 'https://digitilize-pragun.onrender.com/server3/getdata'
+    response = requests.get(url)
+    data = response.json()
 
-hello = [12,45,47,59,0,12,45]
-print(hello.pop())
-print(hello)
-hello.insert(1,18)
-print(hello)
-hello.append(472)
-print(hello)
-print(hello.count(12))
-print(hello.index(12))
-print(hello.sort(reverse=True))
-print(hello)
+    start_time = datetime(2023, 5, 12, 9, 0)
+    end_time=datetime(2023,5,12,15,0)
+    appointment_duration = timedelta(minutes=30)
+    appointment_time= start_time + appointment_duration
 
-world = (12,415,150,0,78,58,252,842,45)
-print(type(world))
-print(world[::-1])
-print(world[2:7])
-print(world.count(12))
-print(world.index(0))
+    id_1=data['data'][-1]['id']
+    print(id_1)
+    for j in range(0,id_1):
+        for i in range(j,j+1):
+            data1=data['data'][i-1]['allocatted_time']
+            data1=str(data1)
+            if i%2 ==0:
+                appointment_time= start_time + appointment_duration
+                data1 = appointment_time.strftime('%H:%M')
+            else:
+                data1=appointment_time.strftime('%H:%M')
+            print (data1)
+            
 
-pragun = {"hello":1,"jaswal":2}
-print(type(pragun))
-print(pragun.keys())
-print(pragun.values())
-print(pragun.items())
-pragun.update({"hello":10})
-print(pragun.get("jaswal"))
-print(pragun)
+        dic={'id':i+1,'time':data1}
+        print(dic)
+        r=requests.post('https://digitilize-pragun.onrender.com/postdata/server3', json=dic)
+        print (r.status_code)
+        if r.status_code == 201:
+            print('Data successfully updated')
+        else:
+            print('Error updating data')
+        
+        appointment_duration = timedelta(minutes=30)
+        start_time=appointment_time
 
-pragun.pop("hello")
-print(pragun)
-pragun.update({"new":89})
-print(pragun)
-print(len(pragun))
+
+
+# schedule.every().day.at("01:11").do(do)  # Adjust the time as needed
+
+# # Keep the program running to execute scheduled jobs
+# while True:
+#     schedule.run_pending()
+#     print("hello")
+#     time.sleep(1)
