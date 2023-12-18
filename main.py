@@ -85,30 +85,30 @@ def close_database_connection(conn):
         conn.close()
         print("DATABASE CONNECTION CLOSED")
 
-# def print_api_response():
-#     api_url = "https://digitilize-pragun.onrender.com/getdata"
-#     while True:
+def print_api_response():
+    api_url = "https://digitilize-pragun.onrender.com/getdata"
+    while True:
     
-#         try:
-#             # Make a GET request to the API
-#             response = requests.get(api_url)
+        try:
+            # Make a GET request to the API
+            response = requests.get(api_url)
 
-#             # Check if the request was successful (status code 200)
-#             if response.status_code == 200:
-#                 # Print the API response content
-#                 print(response.text)
-#             else:
-#                 print(f"Failed to fetch data. Status code: {response.status_code}")
+            # Check if the request was successful (status code 200)
+            if response.status_code == 200:
+                # Print the API response content
+                print(response.text)
+            else:
+                print(f"Failed to fetch data. Status code: {response.status_code}")
 
-#         except Exception as e:
-#             print(f"An error occurred: {str(e)}")
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
 
-#         # Wait for 60 seconds before making the next request
-#         time.sleep(60)
+        # Wait for 60 seconds before making the next request
+        time.sleep(60)
 
 
-# # Create a background thread to run the print_api_response function:
-# background_thread = threading.Thread(target=print_api_response)
+# Create a background thread to run the print_api_response function:
+background_thread = threading.Thread(target=print_api_response)
 
 
 @app.get("/gettable", response_class=HTMLResponse)
