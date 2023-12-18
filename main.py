@@ -80,6 +80,21 @@ def connect_to_database():
         print(f"Error connecting to the database: {e}")
         return None
 
+def connect_to_database():
+    try:
+        conn = psycopg2.connect(
+            host='db.idojuihasgaurthhrddn.supabase.co',
+            database='postgres',
+            user='postgres',
+            password='PragunJaswal',
+            cursor_factory=RealDictCursor
+        )
+        print("DATABASE CONNECTED")
+        return conn
+    except psycopg2.Error as e:
+        print(f"Error connecting to the database: {e}")
+        return None
+
 def close_database_connection(conn):
     if conn:
         conn.close()
