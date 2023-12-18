@@ -65,7 +65,6 @@ while True:
 
 templates =Jinja2Templates(directory="templates")
         
-database_connection = connect_to_database()
 
 def connect_to_database():
     try:
