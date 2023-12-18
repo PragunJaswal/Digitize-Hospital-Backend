@@ -122,8 +122,6 @@ def getpost():
         print(f"An error occurred given as: {str(e)}")
 
 
-        
-
 @app.get("/getadmin")
 def getpost():
     cursor.execute("""SELECT * FROM admin_login ORDER BY id DESC""")
@@ -184,7 +182,7 @@ def post(payload: Post):
     # new = payload.dict()
     # new['id']=randrange(0,100000)
     # my_post.append(new)
-    cursor.execute("""INSERT INTO posts (name, age ,sex,mobile,aadhar) VALUES (%s,%s,%s,%s,%s) RETURNING *""",(
+    cursor.execute("""INSERT INTO login (name, age ,sex,mobile,aadhar) VALUES (%s,%s,%s,%s,%s) RETURNING *""",(
     payload.name,payload.age,payload.sex,payload.mobile,payload.aadhar))
     new =cursor.fetchone()
     conn.commit()
