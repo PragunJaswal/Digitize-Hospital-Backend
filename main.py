@@ -218,7 +218,7 @@ def update_doctor_status(registration_id: int,state: int = 0):
 
 @app.get("/server2/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM patient ORDER BY age DESC""")
+    cursor.execute("""SELECT * FROM patient ORDER BY id DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 # 
@@ -243,7 +243,7 @@ def getlocation(location :str):
 
 @app.get("/server3/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM patient ORDER BY id ASC""")
+    cursor.execute("""SELECT * FROM patient ORDER BY age DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
