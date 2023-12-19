@@ -10,7 +10,7 @@ from starlette.middleware.cors import CORSMiddleware
 import psycopg2                     # for databse connection
 from psycopg2.extras import RealDictCursor
 import time
-
+from datetime import datetime
 
 app =FastAPI()
 
@@ -48,6 +48,9 @@ class Post2(BaseModel):
     date: str
     time: str
 
+class Post3(BaseModel):
+    id: int
+    allocated_time: str
 
                     #connection with database
 while True:
@@ -195,6 +198,12 @@ def getlocation():
     posts = cursor.fetchall()
     return{ "data":posts }
 
+# @app.get("/server2/parchi")
+# def getlocation():
+#     cursor.execute("""SELECT DISTINCT "Location" FROM admin""")
+#     posts = cursor.fetchall()
+#     return{ "data":posts }
+ 
 @app.get("/server2/department/{location}")
 def getlocation(location :str):
     cursor.execute(f"""SELECT "Department" FROM admin WHERE "Location" LIKE '{location}'""")
@@ -207,6 +216,30 @@ def getpost():
     cursor.execute("""SELECT * FROM patient ORDER BY id ASC""")
     posts = cursor.fetchall()
     return{ "data":posts }
+
+@app.post("/server3/postdata",status_code=201)
+def post_time(payload: Post3):
+    allocated_time = datetime.strptime(payload.allocated_time, '%Y-%m-%d %H:%M:%S')
+    formatted_allocated_time = allocated_time.strftime(r'%Y-%m-%d %H:%M:%S')
+    print(formatted_allocated_time,payload.id)
+    try:
+        with conn.cursor() as cursor:
+            query = """UPDATE public.patient SET allocated_time = (TIMESTAMP %s) WHERE id = %s"""
+            cursor.execute(query, (formatted_allocated_time, payload.id))
+            # Commit the changes to the database
+            conn.commit()
+        return {"message": f"Allocated time updated for patient ID {payload.id}"}
+    except Exception as e:
+        # If there's an error, rollback the changes
+        conn.rollback()
+        # Optionally, raise an HTTP exception with the error details
+        raise HTTPException(status_code=500, detail=str(e))
+    # cursor.execute("""UPDATE public.patient SET allocated_time = %s  WHERE id = %s""",formatted_allocated_time,payload.id)
+    # new =cursor.fetchone()
+    # conn.commit()
+    # conn.rollback()
+    # return{ "data"}
+
 
 
 @app.post("/post")                          # simple post
@@ -238,6 +271,7 @@ def post(payload: Post2):
     new =cursor.fetchone()
     conn.commit()
     conn.rollback()
+    # conn.rollback()
     # print(new)
     return{"Success":new }
 
