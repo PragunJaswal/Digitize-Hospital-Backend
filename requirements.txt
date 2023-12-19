@@ -7,4 +7,5 @@ jinja2
 starlette
 uvicorn == 0.21.1
 scikit-learn
+pandas
 joblib
