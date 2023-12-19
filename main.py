@@ -74,6 +74,11 @@ class Post3(BaseModel):
     id: int
     allocated_time: str
 
+class Post4(BaseModel):
+    id:int
+    reason: str
+    available_in: int
+
 class SymptomsInput(BaseModel):
     symptoms: List[str]
 
@@ -280,6 +285,22 @@ def getpost(registration_id: int):
     cursor.execute(f"""SELECT * FROM doctors WHERE registration_id = {registration_id}""")
     posts = cursor.fetchall()
     return{ "data":posts }
+
+@app.post("/post/status/doctor/")
+def update_Status(payload: Post4):
+    try:
+        with conn.cursor() as cursor:
+            query = """UPDATE public.doctors SET reason = %s ,available_in = %s WHERE id = %s"""
+            cursor.execute(query, (payload.reason,payload.available_in,payload.id))
+            # Commit the changes to the database
+            conn.commit()
+        return {"message": f"Updated {payload.id}"}
+    except Exception as e:
+        # If there's an error, rollback the changes
+        conn.rollback()
+        # Optionally, raise an HTTP exception with the error details
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/server3/postdata",status_code=201)
 def post_time(payload: Post3):
