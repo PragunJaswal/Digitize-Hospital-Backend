@@ -217,9 +217,9 @@ def getpost():
     posts = cursor.fetchall()
     return{ "data":posts }
 
-@app.get("/get/status/doctor/{id}")
-def getpost(location :int):
-    cursor.execute(f"""SELECT * FROM doctors WHERE registration_id = {location}""")
+@app.get("/get/status/doctor/{registration_id}")
+def getpost(registration_id: int):
+    cursor.execute(f"""SELECT * FROM doctors WHERE registration_id = {registration_id}""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
