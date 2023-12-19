@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with Markers</title>
+    <!-- Include Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <style>
+        #map {
+            height: 800px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Create a container div for the map -->
+<div id="map"></div>
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+<script>
+    var markersData = [
+        { lat: 37.7749, lon: -122.4194, name: 'San Francisco' },
+        { lat: 40.7128, lon: -74.0060, name: 'New York City' },
+        { lat: 34.0522, lon: -118.2437, name: 'Los Angeles' },
+        // Add more points as needed
+    ];
+
+    // Initialize the map with default coordinates (center of the world)
+    var map = L.map('map').setView([0, 0], 2);
+
+    // Add a tile layer to the map (you can use other tile providers)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Get the current location of the device
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            // Update the map with the live coordinates
+            map.setView([position.coords.latitude, position.coords.longitude], 12);
+
+            // Add a marker for the live location
+            var markerText = `<b>Your Location</b><br>Lat: ${position.coords.latitude}<br>Lon: ${position.coords.longitude}`;
+            L.marker([position.coords.latitude, position.coords.longitude]).addTo(map)
+                .bindPopup(markerText);
+        }, function (error) {
+            console.error('Error getting current position:', error.message);
+        });
+    } else {
+        console.error('Geolocation is not supported by your browser');
+    }
+
+    // Add markers to the map based on the data
+    markersData.forEach(function (marker) {
+        // Define custom marker style
+        var customIcon = L.icon({
+            iconUrl: 'logo.png', // URL to your custom marker image
+            iconSize: [32, 47], // size of the icon
+            iconAnchor: [16, 32], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -32] // point from which the popup should open relative to the iconAnchor
+        });
+
+        // Add a marker with the custom style
+        var markerText = `<b>${marker.name}</b><br>Lat: ${marker.lat}<br>Lon: ${marker.lon}`;
+        L.marker([marker.lat, marker.lon], { icon: customIcon }).addTo(map)
+            .bindPopup(markerText);
+    });
+</script>
+
+</body>
+</html>
