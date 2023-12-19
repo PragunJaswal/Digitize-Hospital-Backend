@@ -75,7 +75,7 @@ class Post3(BaseModel):
     allocated_time: str
 
 class SymptomsInput(BaseModel):
-    symptoms: list[str]
+    symptoms: List[str]
 
                     #connection with database
 while True:
