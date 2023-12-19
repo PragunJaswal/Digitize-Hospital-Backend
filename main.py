@@ -271,7 +271,7 @@ def get_symptoms():
         'red_sore_around_nose', 'yellow_crust_ooze'
     ]
 
-    return [{"symptom": symptom} for symptom in symptoms]
+    return [{"symptoms": symptoms}]
 
 
 
