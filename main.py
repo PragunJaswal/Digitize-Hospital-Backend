@@ -13,7 +13,7 @@ import time
 from datetime import datetime
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-
+from typing import List
 import joblib
 
 
