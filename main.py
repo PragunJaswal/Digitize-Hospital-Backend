@@ -307,6 +307,12 @@ def post_time(payload: Post3):
     # conn.rollback()
     # return{ "data"} 
 
+@app.get("/get/previous/patient/{mobile_num}")
+def getpost(mobile_num: int):
+    cursor.execute(f"""SELECT * FROM public.patient where mobile_num = {mobile_num}""")
+    posts = cursor.fetchall()
+    return{ "data":posts }
+
 
 
 @app.post("/post")                          # simple post
