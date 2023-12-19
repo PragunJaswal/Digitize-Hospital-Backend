@@ -77,7 +77,7 @@ class Post3(BaseModel):
 class Post4(BaseModel):
     id:int
     reason: str
-    available_in: int
+    available_in: str
 
 class SymptomsInput(BaseModel):
     symptoms: List[str]

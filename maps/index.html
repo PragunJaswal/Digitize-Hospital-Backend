@@ -23,17 +23,18 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
-
 <script>
     var markersData = [
-        { lat: 37.7749, lon: -122.4194, name: 'San Francisco' },
-        { lat: 40.7128, lon: -74.0060, name: 'New York City' },
-        { lat: 34.0522, lon: -118.2437, name: 'Los Angeles' },
+        { lat: 12.931848, lon: 77.649055, name: 'Government Civil Hospital, Agara' },
+        { lat: 13.0068, lon: 77.58124, name: 'Government Maternity Hospital' },
+        { lat: 28.649785, lon: 77.19829, name: 'Government Hospital' },
+        { lat: 12.317618, lon: 76.60324, name: 'Government Ayurvedic Hospital' },
+        { lat: 12.29338, lon: 76.63620, name: 'Government Hospital Jayanagar Mysore' },
         // Add more points as needed
     ];
 
-    // Initialize the map with default coordinates (center of the world)
-    var map = L.map('map').setView([0, 0], 2);
+    // Initialize the map with coordinates [12.315177536227942, 76.63946890452802]
+    var map = L.map('map').setView([12.315177536227942, 76.63946890452802], 12);
 
     // Add a tile layer to the map (you can use other tile providers)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
