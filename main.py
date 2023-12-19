@@ -217,6 +217,12 @@ def getpost():
     posts = cursor.fetchall()
     return{ "data":posts }
 
+@app.get("/get/status/doctor/{id}")
+def getpost(location :int):
+    cursor.execute(f"""SELECT * FROM doctors WHERE registration_id = {location}""")
+    posts = cursor.fetchall()
+    return{ "data":posts }
+
 @app.post("/server3/postdata",status_code=201)
 def post_time(payload: Post3):
     allocated_time = datetime.strptime(payload.allocated_time, '%Y-%m-%d %H:%M:%S')
@@ -238,7 +244,7 @@ def post_time(payload: Post3):
     # new =cursor.fetchone()
     # conn.commit()
     # conn.rollback()
-    # return{ "data"}
+    # return{ "data"} 
 
 
 
