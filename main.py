@@ -369,6 +369,21 @@ async def get_home_care_suggestions(symptom_input: SymptomInput):
 
 
 
+schemes=  {
+    "Nikshay Poshan Yojana":"Ministry of Health and Family Welfare, Government of India has announced the scheme for incentives for nutritional support to TB patients. This scheme will be called “Nikshay Poshan Yojana”.",
+ "Nikshay Poshan Yojana (Nutritional Support To TB Patients)":"An incentive scheme under National Health Mission (NHM) by Central TB Division of MoHFW for Tuberculosis (TB) patients who are under treatment and have registered / notified themselves on the NIKSHAY portal. The incentives can be distributed in Cash or in Kind.",
+ "Rastriya Arogya Nidhi - Health Minister's Cancer Patient Fund":"A scheme to provide financial assistance to poor patients living below poverty line and suffering from cancer, for their treatment at 27 Regional cancer centers (RCCs).",
+ "National AIDS Control Organisation (NACO) Programme":"NACO initiated the Internship Programme for young students who wish to engage with the Government. The internship programme envisages an opportunity for young students to get familiar with and understand the various dimensions of policy-making & implementation of the National AIDS",
+ "Short Term Fellowship under the Human Resource Development Programme for Health Research":"Short Term Fellowship under the Human Resource Development Programme for Health Research aims to provide advanced training in India & abroad to medical and health research personnel in cutting-edge research areas related to medicine & health.",
+ "Long Term Fellowship under the Human Resource Development Programme for Health Research":"Long Term Fellowship under the Human Resource Development Programme for Health Research aims to provide advanced training in India and abroad to medical and health research personnel in cutting-edge research areas related to medicine and health.",
+ "Health Minister's Discretionary Grant":"A health scheme by Ministry of Health & Family Welfare for financially poor patients to defray a part of the expenditure on Hospitalization/treatment in Government Hospitals,for life threatening diseases covered under Rashtriya Arogya Nidhi (RAN), in cases where free medical facilities aren't there.",
+    }
+
+
+@app.get("/get/govt/schemes")
+def getschemes():
+
+    return{"data": schemes}
 
 @app.post("/predict/deptt")
 # Now, let's make predictions for a user with symptoms using the saved model
