@@ -33,8 +33,14 @@
         // Add more points as needed
     ];
 
+    var markersData2 = [
+        { lat: 12.97695, lon: 77.584339, name: 'Sahil Clinic and test lab, Main Bazar, Mysuru' },
+        { lat: 12.986828, lon: 77.51996, name: 'Shyam Medicals, Near Main Bazar' },
+        { lat: 13.0054, lon: 77.60699, name: 'Raman test lab, Opp to New bus stand ' },
+        // Add more points as needed
+    ];
     // Initialize the map with coordinates [12.315177536227942, 76.63946890452802]
-    var map = L.map('map').setView([12.315177536227942, 76.63946890452802], 12);
+    var map = L.map('map').setView([12.9786383, 77.593159], 13.8);
 
     // Add a tile layer to the map (you can use other tile providers)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -59,20 +65,26 @@
     }
 
     // Add markers to the map based on the data
-    markersData.forEach(function (marker) {
-        // Define custom marker style
-        var customIcon = L.icon({
-            iconUrl: 'logo.png', // URL to your custom marker image
-            iconSize: [40, 55], // size of the icon
-            iconAnchor: [16, 32], // point of the icon which will correspond to marker's location
-            popupAnchor: [0, -32] // point from which the popup should open relative to the iconAnchor
-        });
+    function addMarkers(markers, iconUrl, iconSize) {
+        markers.forEach(function (marker) {
+            // Define custom marker style
+            var customIcon = L.icon({
+                iconUrl: iconUrl, // Use the provided icon URL
+                iconSize: iconSize, // Use the provided icon size
+                iconAnchor: [iconSize[0] / 2, iconSize[1]], // Adjust anchor based on icon size
+                popupAnchor: [0, -iconSize[1]] // Adjust popup anchor based on icon size
+            });
 
-        // Add a marker with the custom style
-        var markerText = `<b>${marker.name}</b><br>Lat: ${marker.lat}<br>Lon: ${marker.lon}`;
-        L.marker([marker.lat, marker.lon], { icon: customIcon }).addTo(map)
-            .bindPopup(markerText);
-    });
+            // Add a marker with the custom style
+            var markerText = `<b>${marker.name}</b><br>Lat: ${marker.lat}<br>Lon: ${marker.lon}`;
+            L.marker([marker.lat, marker.lon], { icon: customIcon }).addTo(map)
+                .bindPopup(markerText);
+        });
+    }
+
+    // Add markers for both sets of data with different icon sizes
+    addMarkers(markersData, 'logo.png', [45, 60]); // Use [40, 55] for markersData
+    addMarkers(markersData2, 'logo2.png', [42, 40]); // Use [30, 40] for markersData2
 </script>
 
 </body>

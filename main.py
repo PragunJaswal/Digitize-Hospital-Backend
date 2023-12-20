@@ -348,6 +348,27 @@ def post(payload: Post2):
     # print(new)
     return{"Success":new }
 
+class SymptomInput(BaseModel):
+    symptoms: list[str]
+
+import csv
+def get_suggestion(symptom):
+    with open('suggestion1.csv', newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row['Symptom'].lower() == symptom.lower():
+                return row['Home Care Suggestions']
+    return f"Suggestion not found for symptom: {symptom}"
+
+@app.post("/get_home_care_suggestions")
+async def get_home_care_suggestions(symptom_input: SymptomInput):
+    suggestions = {}
+    for symptom in symptom_input.symptoms:
+        suggestions[symptom] = get_suggestion(symptom)
+    return {"home_care_suggestions": suggestions}
+
+
+
 
 @app.post("/predict/deptt")
 # Now, let's make predictions for a user with symptoms using the saved model
