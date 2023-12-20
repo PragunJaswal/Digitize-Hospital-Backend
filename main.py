@@ -349,7 +349,7 @@ def post(payload: Post2):
     return{"Success":new }
 
 class SymptomInput(BaseModel):
-    symptoms: list[str]
+    symptoms: List[str]
 
 import csv
 def get_suggestion(symptom):
