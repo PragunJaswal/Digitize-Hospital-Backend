@@ -102,9 +102,9 @@ templates =Jinja2Templates(directory="templates")
 def connect_to_database():
     try:
         conn = psycopg2.connect(
-            host='db.idojuihasgaurthhrddn.supabase.co',
+            host='aws-0-ap-south-1.pooler.supabase.com',
             database='postgres',
-            user='postgres',
+            user='postgres.idojuihasgaurthhrddn',
             password='PragunJaswal',
             cursor_factory=RealDictCursor
         )
