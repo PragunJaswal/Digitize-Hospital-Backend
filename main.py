@@ -85,8 +85,8 @@ class SymptomsInput(BaseModel):
                     #connection with database
 while True:
     try:
-        conn = psycopg2.connect(host = 'db.idojuihasgaurthhrddn.supabase.co', database ='postgres', 
-                            user='postgres' ,password ='PragunJaswal',cursor_factory= RealDictCursor)
+        conn = psycopg2.connect(host = 'aws-0-ap-south-1.pooler.supabase.com', database ='postgres', 
+                            user='postgres.idojuihasgaurthhrddn' ,password ='PragunJaswal',cursor_factory= RealDictCursor)
         cursor = conn.cursor()
         print("DATABASE CONNECTED")
         break
