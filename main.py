@@ -220,13 +220,13 @@ def update_doctor_status(registration_id: int,state: int = 0):
 
 @app.get("/server2/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM patient ORDER BY id DESC""")
+    cursor.execute("""SELECT * FROM patients ORDER BY id DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 # 
 @app.get("/server2/getdata/{date}")
-def getpatientbydate(date: str):
-    cursor.execute(f"""SELECT * FROM patient WHERE date = '{date}'""")
+def getpatientsbydate(date: str):
+    cursor.execute(f"""SELECT * FROM patients WHERE date = '{date}'""")
     posts = cursor.fetchall()
     return { "data": posts }
 
@@ -252,7 +252,7 @@ def getlocation(location :str):
 
 @app.get("/server3/getdata")
 def getpost():
-    cursor.execute("""SELECT * FROM patient ORDER BY age DESC""")
+    cursor.execute("""SELECT * FROM patients ORDER BY age DESC""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
@@ -300,25 +300,25 @@ def post_time(payload: Post3):
     print(formatted_allocated_time,payload.id)
     try:
         with conn.cursor() as cursor:
-            query = """UPDATE public.patient SET allocated_time = (TIMESTAMP %s) WHERE id = %s"""
+            query = """UPDATE public.patients SET allocated_time = (TIMESTAMP %s) WHERE id = %s"""
             cursor.execute(query, (formatted_allocated_time, payload.id))
             # Commit the changes to the database
             conn.commit()
-        return {"message": f"Allocated time updated for patient ID {payload.id}"}
+        return {"message": f"Allocated time updated for patients ID {payload.id}"}
     except Exception as e:
         # If there's an error, rollback the changes
         conn.rollback()
         # Optionally, raise an HTTP exception with the error details
         raise HTTPException(status_code=500, detail=str(e))
-    # cursor.execute("""UPDATE public.patient SET allocated_time = %s  WHERE id = %s""",formatted_allocated_time,payload.id)
+    # cursor.execute("""UPDATE public.patients SET allocated_time = %s  WHERE id = %s""",formatted_allocated_time,payload.id)
     # new =cursor.fetchone()
     # conn.commit()
     # conn.rollback()
     # return{ "data"} 
 
-@app.get("/get/previous/patient/{mobile_num}")
+@app.get("/get/previous/patients/{mobile_num}")
 def getpost(mobile_num: int):
-    cursor.execute(f"""SELECT * FROM public.patient where mobile_num = {mobile_num}""")
+    cursor.execute(f"""SELECT * FROM public.patients where mobile_num = {mobile_num}""")
     posts = cursor.fetchall()
     return{ "data":posts }
 
@@ -348,7 +348,7 @@ def post(payload: Post):
 
 @app.post("/server2/postdata",status_code=201)        #DEFAULT RESPONSE 201
 def post(payload: Post2):
-    cursor.execute("""INSERT INTO patient (name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
+    cursor.execute("""INSERT INTO patients (name, age ,sex,location,department,date,time) VALUES (%s,%s,%s,%s,%s,%s,%s) RETURNING *""",(
             payload.name,payload.age,payload.sex,payload.location,payload.department,payload.date,payload.time))
     new =cursor.fetchone()
     conn.commit()
@@ -379,13 +379,13 @@ async def get_home_care_suggestions(symptom_input: SymptomInput):
 
 
 schemes=  {
-    "Nikshay Poshan Yojana":"Ministry of Health and Family Welfare, Government of India has announced the scheme for incentives for nutritional support to TB patients. This scheme will be called “Nikshay Poshan Yojana”.",
- "Nikshay Poshan Yojana (Nutritional Support To TB Patients)":"An incentive scheme under National Health Mission (NHM) by Central TB Division of MoHFW for Tuberculosis (TB) patients who are under treatment and have registered / notified themselves on the NIKSHAY portal. The incentives can be distributed in Cash or in Kind.",
- "Rastriya Arogya Nidhi - Health Minister's Cancer Patient Fund":"A scheme to provide financial assistance to poor patients living below poverty line and suffering from cancer, for their treatment at 27 Regional cancer centers (RCCs).",
+    "Nikshay Poshan Yojana":"Ministry of Health and Family Welfare, Government of India has announced the scheme for incentives for nutritional support to TB patientss. This scheme will be called “Nikshay Poshan Yojana”.",
+ "Nikshay Poshan Yojana (Nutritional Support To TB patientss)":"An incentive scheme under National Health Mission (NHM) by Central TB Division of MoHFW for Tuberculosis (TB) patientss who are under treatment and have registered / notified themselves on the NIKSHAY portal. The incentives can be distributed in Cash or in Kind.",
+ "Rastriya Arogya Nidhi - Health Minister's Cancer patients Fund":"A scheme to provide financial assistance to poor patientss living below poverty line and suffering from cancer, for their treatment at 27 Regional cancer centers (RCCs).",
  "National AIDS Control Organisation (NACO) Programme":"NACO initiated the Internship Programme for young students who wish to engage with the Government. The internship programme envisages an opportunity for young students to get familiar with and understand the various dimensions of policy-making & implementation of the National AIDS",
  "Short Term Fellowship under the Human Resource Development Programme for Health Research":"Short Term Fellowship under the Human Resource Development Programme for Health Research aims to provide advanced training in India & abroad to medical and health research personnel in cutting-edge research areas related to medicine & health.",
  "Long Term Fellowship under the Human Resource Development Programme for Health Research":"Long Term Fellowship under the Human Resource Development Programme for Health Research aims to provide advanced training in India and abroad to medical and health research personnel in cutting-edge research areas related to medicine and health.",
- "Health Minister's Discretionary Grant":"A health scheme by Ministry of Health & Family Welfare for financially poor patients to defray a part of the expenditure on Hospitalization/treatment in Government Hospitals,for life threatening diseases covered under Rashtriya Arogya Nidhi (RAN), in cases where free medical facilities aren't there.",
+ "Health Minister's Discretionary Grant":"A health scheme by Ministry of Health & Family Welfare for financially poor patientss to defray a part of the expenditure on Hospitalization/treatment in Government Hospitals,for life threatening diseases covered under Rashtriya Arogya Nidhi (RAN), in cases where free medical facilities aren't there.",
     }
 
 
