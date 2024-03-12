@@ -162,6 +162,8 @@ def print_api_response():
 background_thread = threading.Thread(target=print_api_response)
 
 
+
+
 @app.get("/gettable", response_class=HTMLResponse)
 def gettable(request : Request):
     return templates.TemplateResponse("index.html",{"request": request} )
@@ -222,6 +224,13 @@ def getpost():
     posts = cursor.fetchall()
     return{ "data":posts }
 # 
+@app.get("/server2/getdata/{date}")
+def getpatientbydate(date: str):
+    cursor.execute(f"""SELECT * FROM patient WHERE date = '{date}'""")
+    posts = cursor.fetchall()
+    return { "data": posts }
+
+
 @app.get("/server2/location")
 def getlocation():
     cursor.execute("""SELECT DISTINCT "Location" FROM admin""")
@@ -523,6 +532,10 @@ def update(id: int ,post: Post):
 
 
     return{"data":my_post}
+
+@app.get("/{path:path}", include_in_schema=False)
+async def not_found(path: str):
+    raise HTTPException(status_code=404, detail="API ENDPOINT NOT FOUND")
 
 app.add_middleware(
 CORSMiddleware,
